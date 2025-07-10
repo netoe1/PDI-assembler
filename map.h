@@ -3,7 +3,7 @@
 
 typedef struct
 {
-    char label[3 + 1];
+    char label[2 + 1];
     char code[3 + 1];
 } RegMap;
 
