@@ -1,0 +1,3 @@
+- Preciso criar o branch para identificar o tipo de instrução, o assembler deve saber
+- Preciso terminar e validar as entradas erradas;
+- Preciso arrumar o bug dos map's criados;
