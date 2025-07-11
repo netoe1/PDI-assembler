@@ -15,20 +15,20 @@ const InstructionMap VALID_INSTRUCTIONS[] = {
 };
 
 const RegMap VALID_REGISTERS[] = {
-    {R0_LABEL, R0_CODE},
-    {R1_LABEL, R1_CODE},
-    {R2_LABEL, R2_CODE},
-    {R3_LABEL, R3_CODE},
-    {R4_LABEL, R4_CODE},
-    {R5_LABEL, R5_CODE},
-    {R6_LABEL, R6_LABEL},
-    {R7_LABEL, R7_CODE},
+    {R0_LABEL, R0_CODE},  // R0
+    {R1_LABEL, R1_CODE},  // R1
+    {R2_LABEL, R2_CODE},  // R2
+    {R3_LABEL, R3_CODE},  // R3
+    {R4_LABEL, R4_CODE},  // R4
+    {R5_LABEL, R5_CODE},  // R5
+    {R6_LABEL, R6_LABEL}, // R6
+    {R7_LABEL, R7_CODE},  // R7
 };
 
-int searchRegByLabel(char label[3])
+int getRegByLabel(char label[3])
 {
     to_lower(label);
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < MAX_REG; i++)
     {
         if (strcmp(label, VALID_REGISTERS[i].label) == SUCCESSFUL_OPERATION)
         {
@@ -37,8 +37,8 @@ int searchRegByLabel(char label[3])
     }
     return -1;
 }
-// Search if label's statement is correct.
-int searchRegByCode(char code[4])
+// get if label's statement is correct.
+int getRegByCode(char code[4])
 {
 
     to_lower(code);
@@ -53,7 +53,7 @@ int searchRegByCode(char code[4])
     return -1;
 }
 
-int searchInstructionByLabel(char label[4])
+int getInstructionByLabel(char label[4])
 {
     to_lower(label);
 
@@ -66,7 +66,7 @@ int searchInstructionByLabel(char label[4])
     }
     return -1;
 }
-int searchInstructionByCode(char code[4])
+int getInstructionByCode(char code[4])
 {
     to_lower(code);
 
@@ -78,4 +78,33 @@ int searchInstructionByCode(char code[4])
         }
     }
     return -1;
+}
+
+InstructionType getInstructionType(char *instruction_treated)
+{
+    to_lower(instruction_treated);
+
+    if (strcmp(I_LDA_LABEL, instruction_treated) == SUCCESSFUL_OPERATION ||
+        strcmp(I_STA_LABEL, instruction_treated) == SUCCESSFUL_OPERATION)
+    {
+        return TYPE_I;
+    }
+    if (strcmp(R_MUL_LABEL, instruction_treated) == SUCCESSFUL_OPERATION ||
+        strcmp(R_SUB_LABEL, instruction_treated) == SUCCESSFUL_OPERATION ||
+        strcmp(R_SUM_LABEL, instruction_treated) == SUCCESSFUL_OPERATION)
+    {
+        return TYPE_R;
+    }
+    if (strcmp(J_JMP_LABEL, instruction_treated) == SUCCESSFUL_OPERATION)
+    {
+        return TYPE_J;
+    }
+
+    if (strcmp(B_BEQ_LABEL, instruction_treated) == SUCCESSFUL_OPERATION ||
+        strcmp(B_BNE_LABEL, instruction_treated) == SUCCESSFUL_OPERATION)
+    {
+        return TYPE_B;
+    }
+
+    return INVALID_INSTRUCTION;
 }

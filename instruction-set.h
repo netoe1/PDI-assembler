@@ -40,6 +40,7 @@
 #define R7_CODE "111"
 
 #define MAX_REG 8
+#define MAX_INSTRUCTIONS 8
 #define MAX_INSTRUCTION_LABEL_SIZE 3
 #define MAX_INSTRUCTION_CODE_SIZE 3
 #define MAX_REG_LABEL_SIZE 2
@@ -50,6 +51,16 @@
 #define SUCCESSFUL_OPERATION 0
 #define FAILURE_OPERATION -1
 // Instruct-Set-TypeR => TOKEN_PARSE
+
+// New Feature IGNORE AT ALL!
+typedef enum
+{
+    TYPE_R,
+    TYPE_I,
+    TYPE_J,
+    TYPE_B,
+    INVALID_INSTRUCTION
+} InstructionType;
 
 typedef struct
 {
@@ -122,8 +133,11 @@ extern const InstructionMap VALID_INSTRUCTIONS[8];
 extern const RegMap VALID_REGISTERS[8];
 extern const InstructionMap TYPE_R_INSTR[8];
 
-int searchRegByLabel(char label[3]); // Search if label's statement is correct.
-int searchRegByCode(char code[4]);   // Search if code's statement is correct.
-int searchInstructionByLabel(char label[4]);
-int searchInstructionByCode(char code[4]);
+int getRegByLabel(char label[3]); // Search if label's statement is correct.
+int getRegByCode(char code[4]);   // Search if code's statement is correct.
+int getInstructionByLabel(char label[4]);
+int getInstructionByCode(char code[4]);
+
+// New Feature ignore at all!
+InstructionType searchInstructionType(const char *instruction_treated);
 #endif

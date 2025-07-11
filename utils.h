@@ -6,5 +6,6 @@
 
 bool is_number(const char *str);
 void to_lower(char *str);
-
+void print_slash(char *str);
+void sanitize_buffer(char *buffer);
 #endif

@@ -1,5 +1,5 @@
 #include "utils.h"
-
+#include <string.h>
 bool is_number(const char *str)
 {
     if (*str == '-' || *str == '+')
@@ -24,4 +24,33 @@ void to_lower(char *str)
         *str = tolower((unsigned char)*str);
         str++;
     }
+}
+
+void print_slash(char *str)
+{
+    int i = 0;
+    while (1)
+    {
+        if (str[i] == '\0')
+        {
+            printf("\\0");
+            break;
+        }
+        printf("%c", str[i]);
+        i++;
+    }
+}
+
+void sanitize_buffer(char *line)
+{
+    char *src = line, *dst = line;
+    while (*src)
+    {
+        if (*src != '\n' && *src != '\r')
+        {
+            *dst++ = *src;
+        }
+        src++;
+    }
+    *dst = '\0';
 }
