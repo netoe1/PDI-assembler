@@ -1,7 +1,7 @@
-#include "instruction-set.h"
-#include "utils.h"
 #include <string.h>
 #include <ctype.h>
+#include "instruction-set.h"
+#include "utils.h"
 
 const InstructionMap VALID_INSTRUCTIONS[] = {
     {I_LDA_LABEL, OP_LDA_CODE}, // LDA

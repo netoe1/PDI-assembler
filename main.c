@@ -5,10 +5,12 @@
 #include <signal.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include "debug-modules.h"
 #include "instruction-set.h"
 #include "utils.h"
 
-#define FILENAME_TO_ASSEMBLE "teste.forg"
+#define FILE_TO_ASM "teste.forg"
+
 void loadfile(char *filename)
 {
     FILE *f = fopen(filename, "r");
@@ -32,26 +34,19 @@ void parseFile(FILE *openedFile)
     {
         sanitize_buffer(line);
         lineRead++;
-        if (line[0] == '\n' || line[0] == '#')
+        if (line[0] == '\n' || line[0] == '#' || is_line_empty(line))
         {
             continue;
         }
 
-        instruction = strtok(line, " "); // Separa em tokens
-        sanitize_buffer(instruction);
-        to_lower(instruction);
-        // Coloca tudo em minúsculo
+        instruction = strtok(line, " ");
         if (!instruction) // Verifica se o strtok() foi concluído com sucesso
         {
             fprintf(stderr, "[LINE %d][ERR]: Erro ao dar parse na instrução!\n", lineRead);
             continue;
         }
-
-        // if (strlen(instruction) != MAX_INSTRUCTION_LABEL_SIZE) // Verifica se a instrução é válida com o tamanho do label
-        // {
-        //     fprintf(stderr, "[forg-mount-instr][LINE %d][ERR]: Instrução com tamanho inválido, as labels devem conter apenas 3 letras!\n", lineRead);
-        //     exit(EXIT_FAILURE);
-        // }
+        sanitize_buffer(instruction);
+        to_lower(instruction);
 
         int instr_return = getInstructionByLabel(instruction); // Verifica se a opção existe no map
 
@@ -67,12 +62,13 @@ void parseFile(FILE *openedFile)
         {
             // 1. Captura registrador
             reg = strtok(NULL, ", \n");
-            sanitize_buffer(instruction);
+
             if (!reg || strlen(reg) == 0)
             {
                 fprintf(stderr, "[LINE %d][ERR]: Faltando registrador na instrução '%s'.\n", lineRead, instruction);
                 continue;
             }
+            sanitize_buffer(reg);
 
             if (strlen(reg) != MAX_REG_LABEL_SIZE)
             {
@@ -96,7 +92,7 @@ void parseFile(FILE *openedFile)
                 continue;
             }
 
-            if (!is_number(valStr)) // Se tiver implementado essa função em utils.h
+            if (!is_number(valStr))
             {
                 fprintf(stderr, "[LINE %d][ERR]: Valor '%s' não é um número válido.\n", lineRead, valStr);
                 continue;
@@ -108,29 +104,53 @@ void parseFile(FILE *openedFile)
                 fprintf(stderr, "[LINE %d][ERR]: Valor imediato fora do intervalo permitido: %d\n", lineRead, val);
                 continue;
             }
-            printf("\nParse na linha:%d\n", lineRead);
-            printf("Instrução: %s\n", instruction);
-            printf("Registrador: %s\n", reg);
-            printf("Imediato: %d\n", val);
+            print_debug_typeI(instruction, lineRead, reg, val);
             continue;
         }
+
         if (strcmp(R_SUB_LABEL, instruction) == 0 || strcmp(R_MUL_LABEL, instruction) == 0 || strcmp(R_SUM_LABEL, instruction) == 0) // Instrução TIPO R
         {
+            // Não está pronto!
+            char *rd = "teste";
+            char *rf1 = "teste";
+            char *rf2 = "teste";
+            print_debug_typeR(instruction, lineRead, rd, rf1, rf2);
+            continue;
         }
 
         if (strcmp(J_JMP_LABEL, instruction) == 0) // Instrução TIPO J
         {
+            char *mem_address = strtok(NULL, " \n");
+            if (!is_number(mem_address))
+            {
+                fprintf(stderr, "[LINE %d][ERR]: Valor '%s' não é um endereço de memória válido.\n", lineRead, valStr);
+                continue;
+            }
+
+            int mem_address_int = atoi(mem_address);
+            if (mem_address_int < 0 || mem_address_int > MAX_PROGRAM_MEM_SIZE)
+            {
+                fprintf(stderr, "[LINE %d][ERR]: O valor está fora do limite para a memória de programa.\n", lineRead);
+                continue;
+            }
+            print_debug_typeJ(instruction, lineRead, mem_address_int);
+            continue;
         }
 
         if (strcmp(B_BEQ_LABEL, instruction) == 0 || strcmp(B_BNE_LABEL, instruction) == 0) // Instrução TIPO B
         {
+            char *r1 = "teste";
+            char *r2 = "teste";
+            int mem_address_int = 0;
+            print_debug_typeB(instruction, lineRead, r1, r2, mem_address_int);
+            continue;
         }
     }
 }
 
 int main(void)
 {
-    FILE *f = fopen("teste.forg", "r");
+    FILE *f = fopen(FILE_TO_ASM, "r");
     if (!f)
     {
         goto file_close;

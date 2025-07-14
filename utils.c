@@ -1,5 +1,6 @@
 #include "utils.h"
 #include <string.h>
+#include <stdlib.h>
 bool is_number(const char *str)
 {
     if (*str == '-' || *str == '+')
@@ -26,20 +27,7 @@ void to_lower(char *str)
     }
 }
 
-void print_slash(char *str)
-{
-    int i = 0;
-    while (1)
-    {
-        if (str[i] == '\0')
-        {
-            printf("\\0");
-            break;
-        }
-        printf("%c", str[i]);
-        i++;
-    }
-}
+
 
 void sanitize_buffer(char *line)
 {
@@ -53,4 +41,18 @@ void sanitize_buffer(char *line)
         src++;
     }
     *dst = '\0';
+}
+
+
+
+bool is_line_empty(const char *line)
+{
+    for (; *line != '\0'; line++)
+    {
+        if (!isspace((unsigned char)*line))
+        {
+            return false; // achou caractere que não é espaço, linha não é vazia
+        }
+    }
+    return true; // só espaços e/ou fim da string
 }

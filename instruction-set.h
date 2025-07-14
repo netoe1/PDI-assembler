@@ -47,6 +47,8 @@
 #define MAX_REG_CODE_SIZE 3
 #define MAX_IMED_TYPE_I_SIZE 15
 #define MAX_ADDRESS_SIZE 15
+#define MAX_PROGRAM_MEM_SIZE 15
+#define MAX_PROGRAM_STA_SIZE 15
 
 #define SUCCESSFUL_OPERATION 0
 #define FAILURE_OPERATION -1
@@ -137,6 +139,8 @@ int getRegByLabel(char label[3]); // Search if label's statement is correct.
 int getRegByCode(char code[4]);   // Search if code's statement is correct.
 int getInstructionByLabel(char label[4]);
 int getInstructionByCode(char code[4]);
+
+
 
 // New Feature ignore at all!
 InstructionType searchInstructionType(const char *instruction_treated);

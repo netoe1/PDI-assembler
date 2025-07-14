@@ -1,2 +1,8 @@
 all:
-	gcc -o main main.c instruction-set.c utils.c
+	gcc -o main main.c instruction-set.c debug-modules.c utils.c
+
+crun:
+	make all
+	make run
+run:
+	./main
