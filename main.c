@@ -10,6 +10,7 @@
 #include "utils.h"
 
 #define FILE_TO_ASM "teste.forg"
+#define LINE_LIMIT 256
 
 void loadfile(char *filename)
 {
@@ -24,12 +25,13 @@ void loadfile(char *filename)
 
 void parseFile(FILE *openedFile)
 {
-    char line[256];
+    char line[LINE_LIMIT];
     char *instruction = NULL;
     char *reg = NULL;
     char *valStr = NULL;
     int val;
     int lineRead = 0;
+
     while (fgets(line, sizeof(line), openedFile) != NULL)
     {
         sanitize_buffer(line);
@@ -56,11 +58,9 @@ void parseFile(FILE *openedFile)
             continue;
         }
 
-        // If para detectar de que tipo é a expressão.
-
         if (strcmp(I_LDA_LABEL, instruction) == 0 || strcmp(I_STA_LABEL, instruction) == 0)
         {
-            // 1. Captura registrador
+
             reg = strtok(NULL, ", \n");
 
             if (!reg || strlen(reg) == 0)
@@ -69,13 +69,6 @@ void parseFile(FILE *openedFile)
                 continue;
             }
             sanitize_buffer(reg);
-
-            if (strlen(reg) != MAX_REG_LABEL_SIZE)
-            {
-                fprintf(stderr, "[LINE %d][ERR]: Registrador '%s' inválido! Deve ter exatamente 2 letras.\n", lineRead, reg);
-                continue;
-            }
-
             int regn = getRegByLabel(reg);
             if (regn == FAILURE_OPERATION)
             {
@@ -83,9 +76,9 @@ void parseFile(FILE *openedFile)
                 continue;
             }
 
-            // 2. Captura valor imediato
             valStr = strtok(NULL, " \n");
             sanitize_buffer(instruction);
+
             if (!valStr || strlen(valStr) == 0)
             {
                 fprintf(stderr, "[LINE %d][ERR]: Valor imediato ausente após registrador '%s'.\n", lineRead, reg);
