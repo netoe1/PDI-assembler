@@ -1,5 +1,5 @@
 lda r0,10
-sta r1,10
-jmp 10
+lda r0,10
+sum r0,r1,r1
 
 

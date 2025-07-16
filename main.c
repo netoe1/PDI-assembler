@@ -103,10 +103,39 @@ void parseFile(FILE *openedFile)
 
         else if (instructionParsed.type == TYPE_R) // Instrução TIPO R
         {
-            // Não está pronto!
-            char *rd = "teste";
-            char *rf1 = "teste";
-            char *rf2 = "teste";
+            char *rd = strtok(NULL, ",");
+            if (!rd)
+            {
+                fprintf(stderr, "[LINE %d][ERR]: Registrador destino não definido\n", lineRead);
+                continue;
+            }
+
+            char *rf1 = strtok(NULL, ",");
+            if (!rf1)
+            {
+                fprintf(stderr, "[LINE %d][ERR]: Registrador fonte 1 não definido:\n", lineRead);
+                continue;
+            }
+
+            char *rf2 = strtok(NULL, ", \n");
+            if (!rf2)
+            {
+                fprintf(stderr, "[LINE %d][ERR]: Registrador fonte 2 não definido\n", lineRead);
+                continue;
+            }
+
+            sanitize_buffer(rd);
+            sanitize_buffer(rf1);
+            sanitize_buffer(rf2);
+            to_lower(rd);
+            to_lower(rf1);
+            to_lower(rf2);
+
+            if (!getRegByLabel(rf1) || !getRegByLabel(rf2))
+            {
+                fprintf(stderr, "[LINE %d][ERR]: Registradores RF1 E RF2 definidos de forma incorreta!", lineRead);
+                continue;
+            }
 
             print_debug_typeR(instruction, lineRead, rd, rf1, rf2);
             // continue;
@@ -149,6 +178,7 @@ void parseFile(FILE *openedFile)
             fprintf(stderr, "[LINE %d][ERR]: Apenas uma instrução e seus argumentos devem estar por linha. Texto extra encontrado: '%s'\n", lineRead, sobrou);
         }
     }
+    puts("assembler-msg:parsed.");
 }
 
 int main(void)
