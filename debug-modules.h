@@ -1,7 +1,6 @@
 #ifndef DEBUG_MODULES_H
 #define DEBUG_MODULES_H
 
-#define ALLOW_DEBUG_MSG 0
 
 void print_debug_typeR(char *inst, int line, char *rd, char *rf1, char *rf2);
 void print_debug_typeJ(char *inst, int line, int mem_address);

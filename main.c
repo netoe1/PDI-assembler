@@ -117,7 +117,7 @@ void parseFile(FILE *openedFile)
                 continue;
             }
 
-            char *rf2 = strtok(NULL, ", \n");
+            char *rf2 = strtok(NULL, ",");
             if (!rf2)
             {
                 fprintf(stderr, "[LINE %d][ERR]: Registrador fonte 2 não definido\n", lineRead);
@@ -131,17 +131,18 @@ void parseFile(FILE *openedFile)
             to_lower(rf1);
             to_lower(rf2);
 
-            if (!getRegByLabel(rf1) || !getRegByLabel(rf2))
+            print_debug_typeR(instruction, lineRead, rd, rf1, rf2);
+
+            if (getRegByLabel(rf1) == -1 || getRegByLabel(rf2) == -1)
             {
                 fprintf(stderr, "[LINE %d][ERR]: Registradores RF1 E RF2 definidos de forma incorreta!", lineRead);
                 continue;
             }
 
-            print_debug_typeR(instruction, lineRead, rd, rf1, rf2);
             // continue;
         }
 
-        else if (instructionParsed.type == TYPE_R) // Instrução TIPO J
+        else if (instructionParsed.type == TYPE_J) // Instrução TIPO J
         {
             char *mem_address = strtok(NULL, " \n");
             if (!is_number(mem_address))
@@ -163,9 +164,53 @@ void parseFile(FILE *openedFile)
 
         else if (instructionParsed.type == TYPE_B) // Instrução TIPO B
         {
-            char *r1 = "teste";
-            char *r2 = "teste";
-            int mem_address_int = 0;
+            char *r1 = strtok(NULL, ",");
+            char *r2 = strtok(NULL, ",");
+            char *memAddress = strtok(NULL, ",");
+
+            if (!r1)
+            {
+                fprintf(stderr, "[LINE %d][ERR]: Registrador r1 não especificado corretamentte.\n", lineRead);
+                continue;
+            }
+
+            if (!r2)
+            {
+                fprintf(stderr, "[LINE %d][ERR]: Registrador r2 não especificado corretamente.\n", lineRead);
+                continue;
+            }
+
+            if (!memAddress)
+            {
+                fprintf(stderr, "[LINE %d][ERR]: Endereço de memória não válido.\n", lineRead);
+                continue;
+            }
+
+            sanitize_buffer(r1);
+            sanitize_buffer(r2);
+            sanitize_buffer(memAddress);
+            to_lower(r1);
+            to_lower(r2);
+
+            if (!is_number(memAddress))
+            {
+                fprintf(stderr, "[LINE %d][ERR]: Endereço de memória não é um número!\n", lineRead);
+                continue;
+            }
+
+            if (getRegByLabel(r1) == -1 || getRegByLabel(r2) == -1)
+            {
+                fprintf(stderr, "[LINE %d][ERR]: Registradores não válidos!\n", lineRead);
+                continue;
+            }
+
+            int mem_address_int = atoi(memAddress);
+
+            if (!mem_address_int < 0 || !mem_address_int > 15)
+            {
+                fprintf(stderr, "[LINE %d][ERR]: A região de memória válida vai de [0-15]!\n", lineRead);
+                continue;
+            }
 
             print_debug_typeB(instruction, lineRead, r1, r2, mem_address_int);
             // continue;

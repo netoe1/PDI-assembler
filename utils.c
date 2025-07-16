@@ -27,8 +27,6 @@ void to_lower(char *str)
     }
 }
 
-
-
 void sanitize_buffer(char *line)
 {
     char *src = line, *dst = line;
@@ -43,8 +41,6 @@ void sanitize_buffer(char *line)
     *dst = '\0';
 }
 
-
-
 bool is_line_empty(const char *line)
 {
     for (; *line != '\0'; line++)
@@ -55,4 +51,31 @@ bool is_line_empty(const char *line)
         }
     }
     return true; // só espaços e/ou fim da string
+}
+
+void trim(char *str)
+{
+    int start = 0;
+    int end = strlen(str) - 1;
+    while (isspace(str[start]))
+    {
+        start++;
+    }
+
+    while (end >= start && isspace(str[end]))
+    {
+        end--;
+    }
+    if (start > end)
+    {
+        str[0] = '\0';
+        return;
+    }
+
+    int i, j;
+    for (i = start, j = 0; i <= end; i++, j++)
+    {
+        str[j] = str[i];
+    }
+    str[j] = '\0';
 }
