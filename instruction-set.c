@@ -4,15 +4,14 @@
 #include "utils.h"
 
 const InstructionMap VALID_INSTRUCTIONS[] = {
-    {I_LDA_LABEL, OP_LDA_CODE}, // LDA
-    {R_SUM_LABEL, OP_SUM_CODE}, // SUM
-    {R_SUB_LABEL, OP_SUB_CODE}, // SUB
-    {R_MUL_LABEL, OP_MUL_CODE}, // MUL
-    {J_JMP_LABEL, OP_JMP_CODE}, // JMP
-    {B_BNE_LABEL, OP_BNE_CODE}, // BNE
-    {B_BEQ_LABEL, OP_BEQ_CODE}, // BEQ
-    {I_STA_LABEL, OP_STA_CODE}, // STA
-};
+    {I_LDA_LABEL, OP_LDA_CODE, TYPE_I}, // LDA
+    {R_SUM_LABEL, OP_SUM_CODE, TYPE_R}, // SUM
+    {R_SUB_LABEL, OP_SUB_CODE, TYPE_R}, // SUB
+    {R_MUL_LABEL, OP_MUL_CODE, TYPE_R}, // MUL
+    {J_JMP_LABEL, OP_JMP_CODE, TYPE_J}, // JMP
+    {B_BNE_LABEL, OP_BNE_CODE, TYPE_B}, // BNE
+    {B_BEQ_LABEL, OP_BEQ_CODE, TYPE_B}, // BEQ
+    {I_STA_LABEL, OP_STA_CODE, TYPE_I}};
 
 const RegMap VALID_REGISTERS[] = {
     {R0_LABEL, R0_CODE},  // R0
@@ -80,31 +79,21 @@ int getInstructionByCode(char code[4])
     return -1;
 }
 
-InstructionType getInstructionType(char *instruction_treated)
+static InstructionMap invalidInstruction()
+{
+    InstructionMap invalid = {"null", "-1", -1};
+    return invalid;
+}
+
+InstructionMap getInstructionStructData(char *instruction_treated)
 {
     to_lower(instruction_treated);
-
-    if (strcmp(I_LDA_LABEL, instruction_treated) == SUCCESSFUL_OPERATION ||
-        strcmp(I_STA_LABEL, instruction_treated) == SUCCESSFUL_OPERATION)
+    for (int i = 0; i < sizeof(VALID_INSTRUCTIONS) / sizeof(InstructionMap); i++)
     {
-        return TYPE_I;
+        if (strcmp(instruction_treated, VALID_INSTRUCTIONS[i].label) == SUCCESSFUL_OPERATION)
+        {
+            return VALID_INSTRUCTIONS[i];
+        }
     }
-    if (strcmp(R_MUL_LABEL, instruction_treated) == SUCCESSFUL_OPERATION ||
-        strcmp(R_SUB_LABEL, instruction_treated) == SUCCESSFUL_OPERATION ||
-        strcmp(R_SUM_LABEL, instruction_treated) == SUCCESSFUL_OPERATION)
-    {
-        return TYPE_R;
-    }
-    if (strcmp(J_JMP_LABEL, instruction_treated) == SUCCESSFUL_OPERATION)
-    {
-        return TYPE_J;
-    }
-
-    if (strcmp(B_BEQ_LABEL, instruction_treated) == SUCCESSFUL_OPERATION ||
-        strcmp(B_BNE_LABEL, instruction_treated) == SUCCESSFUL_OPERATION)
-    {
-        return TYPE_B;
-    }
-
-    return INVALID_INSTRUCTION;
+    return invalidInstruction();
 }

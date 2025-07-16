@@ -1,2 +1,0 @@
-- Detectar os tipos de instrução e modularizar
-- Aplicar decode

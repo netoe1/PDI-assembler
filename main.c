@@ -22,7 +22,6 @@ void loadfile(char *filename)
         exit(-1);
     }
 }
-
 void parseFile(FILE *openedFile)
 {
     char line[LINE_LIMIT];
@@ -44,21 +43,22 @@ void parseFile(FILE *openedFile)
         instruction = strtok(line, " ");
         if (!instruction) // Verifica se o strtok() foi concluído com sucesso
         {
-            fprintf(stderr, "[LINE %d][ERR]: Erro ao dar parse na instrução!\n", lineRead);
+            fprintf(stderr, "[LINE %d][ERR]: Instrução inválida / não processada.\nCheque a documentação dos tipos de instrução.\n", lineRead);
             continue;
         }
         sanitize_buffer(instruction);
         to_lower(instruction);
+        // int instr_return = getInstructionByLabel(instruction); // Verifica se a opção existe no map
+        InstructionMap instructionParsed = getInstructionStructData(instruction);
 
-        int instr_return = getInstructionByLabel(instruction); // Verifica se a opção existe no map
-
-        if (instr_return == FAILURE_OPERATION)
+        if (strcmp(instructionParsed.code, "-1") == FAILURE_OPERATION)
         {
             fprintf(stderr, "[LINE %d][ERR]: A instrução '%s' não existe na arquitetura.\n", lineRead, instruction);
             continue;
         }
 
-        if (strcmp(I_LDA_LABEL, instruction) == 0 || strcmp(I_STA_LABEL, instruction) == 0)
+        // if (strcmp(I_LDA_LABEL, instruction) == 0 || strcmp(I_STA_LABEL, instruction) == 0)
+        if (instructionParsed.type == TYPE_I)
         {
 
             reg = strtok(NULL, ", \n");
@@ -98,20 +98,21 @@ void parseFile(FILE *openedFile)
                 continue;
             }
             print_debug_typeI(instruction, lineRead, reg, val);
-            continue;
+            // continue;
         }
 
-        if (strcmp(R_SUB_LABEL, instruction) == 0 || strcmp(R_MUL_LABEL, instruction) == 0 || strcmp(R_SUM_LABEL, instruction) == 0) // Instrução TIPO R
+        else if (instructionParsed.type == TYPE_R) // Instrução TIPO R
         {
             // Não está pronto!
             char *rd = "teste";
             char *rf1 = "teste";
             char *rf2 = "teste";
+
             print_debug_typeR(instruction, lineRead, rd, rf1, rf2);
-            continue;
+            // continue;
         }
 
-        if (strcmp(J_JMP_LABEL, instruction) == 0) // Instrução TIPO J
+        else if (instructionParsed.type == TYPE_R) // Instrução TIPO J
         {
             char *mem_address = strtok(NULL, " \n");
             if (!is_number(mem_address))
@@ -126,17 +127,26 @@ void parseFile(FILE *openedFile)
                 fprintf(stderr, "[LINE %d][ERR]: O valor está fora do limite para a memória de programa.\n", lineRead);
                 continue;
             }
+
             print_debug_typeJ(instruction, lineRead, mem_address_int);
-            continue;
+            // continue;
         }
 
-        if (strcmp(B_BEQ_LABEL, instruction) == 0 || strcmp(B_BNE_LABEL, instruction) == 0) // Instrução TIPO B
+        else if (instructionParsed.type == TYPE_B) // Instrução TIPO B
         {
             char *r1 = "teste";
             char *r2 = "teste";
             int mem_address_int = 0;
+
             print_debug_typeB(instruction, lineRead, r1, r2, mem_address_int);
-            continue;
+            // continue;
+        }
+
+        char *sobrou = strtok(NULL, " \n");
+
+        if (sobrou != NULL)
+        {
+            fprintf(stderr, "[LINE %d][ERR]: Apenas uma instrução e seus argumentos devem estar por linha. Texto extra encontrado: '%s'\n", lineRead, sobrou);
         }
     }
 }

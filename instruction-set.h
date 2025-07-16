@@ -55,14 +55,7 @@
 // Instruct-Set-TypeR => TOKEN_PARSE
 
 // New Feature IGNORE AT ALL!
-typedef enum
-{
-    TYPE_R,
-    TYPE_I,
-    TYPE_J,
-    TYPE_B,
-    INVALID_INSTRUCTION
-} InstructionType;
+
 
 typedef struct
 {
@@ -140,8 +133,6 @@ int getRegByCode(char code[4]);   // Search if code's statement is correct.
 int getInstructionByLabel(char label[4]);
 int getInstructionByCode(char code[4]);
 
-
-
 // New Feature ignore at all!
-InstructionType searchInstructionType(const char *instruction_treated);
+InstructionMap getInstructionStructData(char *instruction_treated);
 #endif

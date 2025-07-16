@@ -1,3 +1,5 @@
 lda r0,10
-sta r8,inter
+sta r1,10
+jmp 10
+
 
