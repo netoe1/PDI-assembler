@@ -85,6 +85,12 @@ static InstructionMap invalidInstruction()
     return invalid;
 }
 
+static RegMap invalidRegister()
+{
+    RegMap invalid = {"null", "null"};
+    return invalid;
+}
+
 InstructionMap getInstructionStructData(char *instruction_treated)
 {
     to_lower(instruction_treated);
@@ -96,4 +102,18 @@ InstructionMap getInstructionStructData(char *instruction_treated)
         }
     }
     return invalidInstruction();
+}
+
+RegMap getRegStructData(char *reg_treated)
+{
+    to_lower(reg_treated);
+
+    for (int i = 0; i < sizeof(VALID_REGISTERS) / sizeof(RegMap); i++)
+    {
+        if (strcmp(reg_treated, VALID_REGISTERS[i].label) == SUCCESSFUL_OPERATION)
+        {
+            return VALID_REGISTERS[i];
+        }
+    }
+    return invalidRegister();
 }

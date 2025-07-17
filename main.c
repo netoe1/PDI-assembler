@@ -48,7 +48,6 @@ void parseFile(FILE *openedFile)
         }
         sanitize_buffer(instruction);
         to_lower(instruction);
-        // int instr_return = getInstructionByLabel(instruction); // Verifica se a opção existe no map
         InstructionMap instructionParsed = getInstructionStructData(instruction);
 
         if (strcmp(instructionParsed.code, "-1") == FAILURE_OPERATION)
@@ -57,7 +56,7 @@ void parseFile(FILE *openedFile)
             continue;
         }
 
-        // if (strcmp(I_LDA_LABEL, instruction) == 0 || strcmp(I_STA_LABEL, instruction) == 0)
+   
         if (instructionParsed.type == TYPE_I)
         {
 
@@ -159,7 +158,6 @@ void parseFile(FILE *openedFile)
             }
 
             print_debug_typeJ(instruction, lineRead, mem_address_int);
-            // continue;
         }
 
         else if (instructionParsed.type == TYPE_B) // Instrução TIPO B

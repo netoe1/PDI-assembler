@@ -56,7 +56,6 @@
 
 // New Feature IGNORE AT ALL!
 
-
 typedef struct
 {
     char op[MAX_INSTRUCTION_LABEL_SIZE];
@@ -132,7 +131,6 @@ int getRegByLabel(char label[3]); // Search if label's statement is correct.
 int getRegByCode(char code[4]);   // Search if code's statement is correct.
 int getInstructionByLabel(char label[4]);
 int getInstructionByCode(char code[4]);
-
-// New Feature ignore at all!
 InstructionMap getInstructionStructData(char *instruction_treated);
+RegMap getRegStructData(char *reg_treated);
 #endif
