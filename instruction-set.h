@@ -3,6 +3,8 @@
 #include "bit-impl.h"
 #include "map.h"
 
+// Defining label for use in table
+
 #define R_SUB_LABEL "sub"
 #define R_MUL_LABEL "mul"
 #define R_SUM_LABEL "sum"
@@ -11,6 +13,8 @@
 #define J_JMP_LABEL "jmp"
 #define B_BNE_LABEL "bne"
 #define B_BEQ_LABEL "beq"
+
+// Defining the codes for architecture.
 
 #define OP_LDA_CODE "000"
 #define OP_SUM_CODE "001"
@@ -50,8 +54,11 @@
 #define MAX_PROGRAM_MEM_SIZE 15
 #define MAX_PROGRAM_STA_SIZE 15
 
+// Labels to use, if you want to make your code more readable.
 #define SUCCESSFUL_OPERATION 0
 #define FAILURE_OPERATION -1
+#define INVALID_REGISTER -1
+#define INVALID_INSTRUCTION -1
 // Instruct-Set-TypeR => TOKEN_PARSE
 
 // New Feature IGNORE AT ALL!
@@ -87,8 +94,7 @@ typedef struct
     char op[MAX_INSTRUCTION_LABEL_SIZE];
     char reg1[MAX_INSTRUCTION_LABEL_SIZE];
     char reg2[MAX_INSTRUCTION_LABEL_SIZE];
-
-} Instruct_Token_TypeB;
+} InstructToken_TypeB;
 
 typedef struct
 {
@@ -127,10 +133,14 @@ extern const InstructionMap VALID_INSTRUCTIONS[8];
 extern const RegMap VALID_REGISTERS[8];
 extern const InstructionMap TYPE_R_INSTR[8];
 
+// Verify if the code is correct. In another case, returns -1 (INVALID_REGISTER)
 int getRegByLabel(char label[3]); // Search if label's statement is correct.
-int getRegByCode(char code[4]);   // Search if code's statement is correct.
+int getRegByCode(char code[4]);
 int getInstructionByLabel(char label[4]);
 int getInstructionByCode(char code[4]);
-InstructionMap getInstructionStructData(char *instruction_treated);
-RegMap getRegStructData(char *reg_treated);
+
+// This make the same, but return structs. Can be useful in some cases.
+InstructionMap getInstructionStructData(char *instruction_treated); // Returns the struct, from table.
+RegMap getRegStructData(char *reg_treated);                         // Get register, but by table
+
 #endif

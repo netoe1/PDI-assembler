@@ -56,11 +56,10 @@ void parseFile(FILE *openedFile)
             continue;
         }
 
-   
         if (instructionParsed.type == TYPE_I)
         {
 
-            reg = strtok(NULL, ", \n");
+            reg = strtok(NULL, ",");
 
             if (!reg || strlen(reg) == 0)
             {
@@ -75,7 +74,7 @@ void parseFile(FILE *openedFile)
                 continue;
             }
 
-            valStr = strtok(NULL, " \n");
+            valStr = strtok(NULL, ",");
             sanitize_buffer(instruction);
 
             if (!valStr || strlen(valStr) == 0)
@@ -143,7 +142,7 @@ void parseFile(FILE *openedFile)
 
         else if (instructionParsed.type == TYPE_J) // Instrução TIPO J
         {
-            char *mem_address = strtok(NULL, " \n");
+            char *mem_address = strtok(NULL, "\n");
             if (!is_number(mem_address))
             {
                 fprintf(stderr, "[LINE %d][ERR]: Valor '%s' não é um endereço de memória válido.\n", lineRead, valStr);
@@ -221,7 +220,8 @@ void parseFile(FILE *openedFile)
             fprintf(stderr, "[LINE %d][ERR]: Apenas uma instrução e seus argumentos devem estar por linha. Texto extra encontrado: '%s'\n", lineRead, sobrou);
         }
     }
-    puts("assembler-msg:parsed.");
+    printf("\nassembler-msg:parsed file.");
+    puts("\nassembler-msg:parsed file.");
 }
 
 int main(void)
