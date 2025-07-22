@@ -98,35 +98,35 @@ typedef struct
 
 typedef struct
 {
-    Bit opcode[4];
-    Bit rd[4];
-    Bit rf1[4];
-    Bit rf2[4];
-    Bit imed[5];
+    Bit opcode[4];  // 000      [3] bits
+    Bit rd[4];      // 000      [3] bits
+    Bit rf1[4];     // 000      [3] bits
+    Bit rf2[4];     // 000      [3] bits
+    Bit imed[5];    // 0000     [4] bits
 } BitStruct_R;
 
 typedef struct
 {
-    Bit opcode[4];
-    Bit rd[4];
-    Bit imed[5];
-    Bit empty[7];
+    Bit opcode[4];  // 000      [3] bits
+    Bit rd[4];      // 000      [3] bits
+    Bit imed[5];    // 0000     [4] bits
+    Bit empty[7];   // 000000   [6] bits
 } BitStruct_I;
 
 typedef struct
 {
-    Bit opcode[3];
-    Bit rd[3];
-    Bit imed[4];
-    Bit empty[6];
+    Bit opcode[4];  // 000      [3] bits
+    Bit rd[4];      // 000      [3] bits
+    Bit imed[5];    // 0000     [4] bits
+    Bit empty[7];   // 000000   [6] bits
 } BitStruct_J;
 
 typedef struct
 {
-    Bit opcode[3];
-    Bit reg1[3];
-    Bit reg2[3];
-    Bit empty[7];
+    Bit opcode[4];  // 000      [3] bits
+    Bit reg1[4];    // 000      [3] bits
+    Bit reg2[4];    // 000      [3] bits
+    Bit empty[8];   // 00000000 [4] bits 
 } BitStruct_B;
 
 extern const InstructionMap VALID_INSTRUCTIONS[8];

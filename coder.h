@@ -13,15 +13,17 @@ InstructToken_TypeR parseToDCoder_typer(const char *instr_treated, const char *r
 
 // Do the same as above, but return parsed in bit struct, defined in bit-impl.h
 
-BitStruct_J coderToBit_typej(const char *instr_treated, const char *imed_treated);
-BitStruct_I coderToBit_typei(const char *instr_treated, const char *rd_treated, const char *imed_treated);
-BitStruct_B coderToBit_typeb(const char *instr_treated, const char *r1_treated, const char *r2_treated, const char *address_treated);
-BitStruct_R coderToBit_typer(const char *instr_treated, const char *rd_treated, const char *rf1_treated, const char *rf2_treated);
+BitStruct_J coderToBit_typej(InstructToken_TypeJ instruction_struct);
+BitStruct_I coderToBit_typei(InstructToken_TypeI instruction_struct);
+BitStruct_B coderToBit_typeb(InstructToken_TypeB instruction_struct);
+BitStruct_R coderToBit_typer(InstructToken_TypeR instruction_struct);
 
 // Returns a str with bits, if you borrow struct
 // Returns a str in a bit format.
 
-// Write codeline line by line in a output file.
-// If returns -1, an error ocurred.
-int writecodeOnFile(const char *filePath, char *code_treated);
+char *bitToStr_typej(BitStruct_J bit_struct);
+char *bitToStr_typei(BitStruct_I bit_struct);
+char *bitToStr_typeb(BitStruct_B bit_struct);
+char *bitToStr_typer(BitStruct_R bit_struct);
+
 #endif
