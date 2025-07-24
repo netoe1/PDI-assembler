@@ -47,6 +47,7 @@
 #define MAX_INSTRUCTIONS 8
 #define MAX_INSTRUCTION_LABEL_SIZE 3
 #define MAX_INSTRUCTION_CODE_SIZE 3
+#define MAX_BITS_INSTRUCTION 16
 #define MAX_REG_LABEL_SIZE 2
 #define MAX_REG_CODE_SIZE 3
 #define MAX_IMED_TYPE_I_SIZE 15
@@ -134,13 +135,13 @@ extern const RegMap VALID_REGISTERS[8];
 extern const InstructionMap TYPE_R_INSTR[8];
 
 // Verify if the code is correct. In another case, returns -1 (INVALID_REGISTER)
-int getRegByLabel(char label[3]); // Search if label's statement is correct.
+int getRegByLabel(char label[3]); // Search if label's statement is correct, returns the index of VALID_REGISTERS; send -1 to an error.
 int getRegByCode(char code[4]);
-int getInstructionByLabel(char label[4]);
+int getInstructionByLabel(char label[4]); // Search if label's statement is correct, returns the index of VALID_REGISTERS send -1 to an error.
 int getInstructionByCode(char code[4]);
 
 // This make the same, but return structs. Can be useful in some cases.
-InstructionMap getInstructionStructData(char *instruction_treated); // Returns the struct, from table.
-RegMap getRegStructData(char *reg_treated);                         // Get register, but by table
+InstructionMap getInstructionStructData(char *instruction_treated); // Returns the struct, returns parsed.
+RegMap getRegStructData(char *reg_treated);                         // Get register, returns parsed;
 
 #endif

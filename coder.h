@@ -14,16 +14,18 @@ InstructToken_TypeR parseToDCoder_typer(const char *instr_treated, const char *r
 // Do the same as above, but return parsed in bit struct, defined in bit-impl.h
 
 BitStruct_J coderToBit_typej(InstructToken_TypeJ instruction_struct);
-BitStruct_I coderToBit_typei(InstructToken_TypeI instruction_struct);
+BitStruct_I coderTobit_typei(InstructToken_TypeI instruction_struct);
 BitStruct_B coderToBit_typeb(InstructToken_TypeB instruction_struct);
 BitStruct_R coderToBit_typer(InstructToken_TypeR instruction_struct);
 
 // Returns a str with bits, if you borrow struct
 // Returns a str in a bit format.
 
-char *bitToStr_typej(BitStruct_J bit_struct);
-char *bitToStr_typei(BitStruct_I bit_struct);
-char *bitToStr_typeb(BitStruct_B bit_struct);
-char *bitToStr_typer(BitStruct_R bit_struct);
+void bitToStr_typej(BitStruct_J bit_struct, char instruction[MAX_BITS_INSTRUCTION + 1]);
+void bitToStr_typei(BitStruct_I bit_struct, char instruction[MAX_BITS_INSTRUCTION + 1]);
+void bitToStr_typeb(BitStruct_B bit_struct, char instruction[MAX_BITS_INSTRUCTION + 1]);
+void bitToStr_typer(BitStruct_R bit_struct, char instruction[MAX_BITS_INSTRUCTION + 1]);
+
+void bitTostr(InstructionTypes type, char instruction[MAX_BITS_INSTRUCTION + 1]); // mux with types.
 
 #endif

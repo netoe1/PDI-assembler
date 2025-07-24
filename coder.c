@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <string.h>
-void convertIntegerToBin16(int integer, char res[], int n)
+
+static void convertIntegerToBin16(int integer, char res[], int n) // Convert a integer number to a binary string 16 bits
 {
     // Inicializa o array de resultado com zeros
     for (int i = 0; i < n; i++)
@@ -60,41 +61,31 @@ void convertIntegerToBin16(int integer, char res[], int n)
 
 InstructToken_TypeJ parseToCoder_typej(const char *instr_treated, const char *imed_treated)
 {
-    int instr_len = strlen(instr_treated);
-    char *endptr = NULL;
-    int num = 0;
-
-    num = strtol(imed_treated, &endptr, 10);
-
-    if (endptr == imed_treated)
-    {
-        printf("coder.c: parseToCoder_typej():Nenhum número foi encontrado na string.\n");
-        exit(-1);
-    }
-    if (*endptr != '\0')
-    {
-        puts("coder.c: parseToCoder_typej(): A string não foi feita totalmente.\n");
-    }
-
     InstructToken_TypeJ send = {instr_treated, imed_treated};
-
     return send;
 }
-InstructToken_TypeI parseToCoder_typei(const char *instr_treated, const char *rd_treated, const char *imed_treated);
-InstructToken_TypeB parseToCoder_typeb(const char *instr_treated, const char *r1_treated, const char *r2_treated, const char *address_treated);
-InstructToken_TypeR parseToDCoder_typer(const char *instr_treated, const char *rd_treated, const char *rf1_treated, const char *rf2_treated);
-
-// Do the same as above, but return parsed in bit struct, defined in bit-impl.h
+InstructToken_TypeI parseToCoder_typei(const char *instr_treated, const char *rd_treated, const char *imed_treated)
+{
+    InstructToken_TypeI typei = {instr_treated, rd_treated, imed_treated};
+    return typei;
+}
+InstructToken_TypeB parseToCoder_typeb(const char *instr_treated, const char *r1_treated, const char *r2_treated, const char *address_treated)
+{
+    InstructToken_TypeB typeb = {instr_treated, r1_treated, r2_treated, address_treated};
+    return typeb;
+}
+InstructToken_TypeR parseToDCoder_typer(const char *instr_treated, const char *rd_treated, const char *rf1_treated, const char *rf2_treated)
+{
+    InstructToken_TypeR typer = {instr_treated, rd_treated, rf1_treated, rf2_treated};
+    return typer;
+}
 
 BitStruct_J coderToBit_typej(InstructToken_TypeJ instruction_struct);
 BitStruct_I coderToBit_typei(InstructToken_TypeI instruction_struct);
 BitStruct_B coderToBit_typeb(InstructToken_TypeB instruction_struct);
 BitStruct_R coderToBit_typer(InstructToken_TypeR instruction_struct);
 
-char *bitToStr_typej(BitStruct_J bit_struct);
-char *bitToStr_typei(BitStruct_I bit_struct);
-char *bitToStr_typeb(BitStruct_B bit_struct);
-char *bitToStr_typer(BitStruct_R bit_struct);
-
-// Write codeline line by line in a output file.
-// If returns -1, an error ocurred.
+void bitTostr_typej(BitStruct_J bit_struct, char instruction[MAX_BITS_INSTRUCTION + 1]);
+void bitToStr_typei(BitStruct_I bit_struct, char instruction[MAX_BITS_INSTRUCTION + 1]);
+void bitToStr_typeb(BitStruct_B bit_struct, char instruction[MAX_BITS_INSTRUCTION + 1]);
+void bitToStr_typer(BitStruct_R bit_struct, char instruction[MAX_BITS_INSTRUCTION + 1]);
