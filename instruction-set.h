@@ -43,6 +43,77 @@
 #define R6_CODE "110"
 #define R7_CODE "111"
 
+#define MEM_ADDRESS_0_BIN "0000"
+#define MEM_ADDRESS_1_BIN "0001"
+#define MEM_ADDRESS_2_BIN "0010"
+#define MEM_ADDRESS_3_BIN "0011"
+#define MEM_ADDRESS_4_BIN "0100"
+#define MEM_ADDRESS_5_BIN "0101"
+#define MEM_ADDRESS_6_BIN "0110"
+#define MEM_ADDRESS_7_BIN "0111"
+#define MEM_ADDRESS_8_BIN "1000"
+#define MEM_ADDRESS_9_BIN "1001"
+#define MEM_ADDRESS_10_BIN "1010"
+#define MEM_ADDRESS_11_BIN "1011"
+#define MEM_ADDRESS_12_BIN "1100"
+#define MEM_ADDRESS_13_BIN "1101"
+#define MEM_ADDRESS_14_BIN "1110"
+#define MEM_ADDRESS_15_BIN "1111"
+
+#define MEM_ADDRESS_0_DECIMAL "0"
+#define MEM_ADDRESS_1_DECIMAL "1"
+#define MEM_ADDRESS_2_DECIMAL "2"
+#define MEM_ADDRESS_3_DECIMAL "3"
+#define MEM_ADDRESS_4_DECIMAL "4"
+#define MEM_ADDRESS_5_DECIMAL "5"
+#define MEM_ADDRESS_6_DECIMAL "6"
+#define MEM_ADDRESS_7_DECIMAL "7"
+#define MEM_ADDRESS_8_DECIMAL "8"
+#define MEM_ADDRESS_9_DECIMAL "9"
+#define MEM_ADDRESS_10_DECIMAL "10"
+#define MEM_ADDRESS_11_DECIMAL "11"
+#define MEM_ADDRESS_12_DECIMAL "12"
+#define MEM_ADDRESS_13_DECIMAL "13"
+#define MEM_ADDRESS_14_DECIMAL "14"
+#define MEM_ADDRESS_15_DECIMAL "15"
+#define MEM_ADDRESS_16_DECIMAL "16"
+
+// Defines para valores imediatos em decimal (4 bits: 0-15)
+#define IMMEDIATE_0_DECIMAL "0"
+#define IMMEDIATE_1_DECIMAL "1"
+#define IMMEDIATE_2_DECIMAL "2"
+#define IMMEDIATE_3_DECIMAL "3"
+#define IMMEDIATE_4_DECIMAL "4"
+#define IMMEDIATE_5_DECIMAL "5"
+#define IMMEDIATE_6_DECIMAL "6"
+#define IMMEDIATE_7_DECIMAL "7"
+#define IMMEDIATE_8_DECIMAL "8"
+#define IMMEDIATE_9_DECIMAL "9"
+#define IMMEDIATE_10_DECIMAL "10"
+#define IMMEDIATE_11_DECIMAL "11"
+#define IMMEDIATE_12_DECIMAL "12"
+#define IMMEDIATE_13_DECIMAL "13"
+#define IMMEDIATE_14_DECIMAL "14"
+#define IMMEDIATE_15_DECIMAL "15"
+
+// Defines para valores imediatos em binário (4 bits)
+#define IMMEDIATE_0_BIN "0000"
+#define IMMEDIATE_1_BIN "0001"
+#define IMMEDIATE_2_BIN "0010"
+#define IMMEDIATE_3_BIN "0011"
+#define IMMEDIATE_4_BIN "0100"
+#define IMMEDIATE_5_BIN "0101"
+#define IMMEDIATE_6_BIN "0110"
+#define IMMEDIATE_7_BIN "0111"
+#define IMMEDIATE_8_BIN "1000"
+#define IMMEDIATE_9_BIN "1001"
+#define IMMEDIATE_10_BIN "1010"
+#define IMMEDIATE_11_BIN "1011"
+#define IMMEDIATE_12_BIN "1100"
+#define IMMEDIATE_13_BIN "1101"
+#define IMMEDIATE_14_BIN "1110"
+#define IMMEDIATE_15_BIN "1111"
+
 #define MAX_REG 8
 #define MAX_INSTRUCTIONS 8
 #define MAX_INSTRUCTION_LABEL_SIZE 3
@@ -51,7 +122,7 @@
 #define MAX_REG_LABEL_SIZE 2
 #define MAX_REG_CODE_SIZE 3
 #define MAX_IMED_TYPE_I_SIZE 15
-#define MAX_ADDRESS_SIZE 15
+#define MAX_ADDRESS_SIZE 16
 #define MAX_PROGRAM_MEM_SIZE 15
 #define MAX_PROGRAM_STA_SIZE 15
 
@@ -108,31 +179,32 @@ typedef struct
 
 typedef struct
 {
-    Bit opcode[4]; // 000      [3] bits
-    Bit rd[4];     // 000      [3] bits
-    Bit imed[5];   // 0000     [4] bits
-    Bit empty[7];  // 000000   [6] bits
+    Bit opcode[3]; // 000      [3] bits
+    Bit rd[3];     // 000      [3] bits
+    Bit imed[4];   // 0000     [4] bits
+    Bit empty[6];  // 000000   [6] bits
 } BitStruct_I;
 
 typedef struct
 {
-    Bit opcode[4]; // 000      [3] bits
-    Bit rd[4];     // 000      [3] bits
-    Bit imed[5];   // 0000     [4] bits
-    Bit empty[7];  // 000000   [6] bits
+    Bit opcode[3]; // 000      [3] bits
+    Bit imed[3];   // 0000     [3] bits
+    Bit empty[10]; // 000000   [10] bits
 } BitStruct_J;
 
 typedef struct
 {
-    Bit opcode[4]; // 000      [3] bits
-    Bit reg1[4];   // 000      [3] bits
-    Bit reg2[4];   // 000      [3] bits
-    Bit empty[8];  // 00000000 [4] bits
+    Bit opcode[3]; // 000      [3] bits
+    Bit reg1[3];   // 000      [3] bits
+    Bit reg2[3];   // 000      [3] bits
+    Bit empty[7];  // 00000000 [4] bits
 } BitStruct_B;
 
 extern const InstructionMap VALID_INSTRUCTIONS[8];
 extern const RegMap VALID_REGISTERS[8];
 extern const InstructionMap TYPE_R_INSTR[8];
+extern const AddressMap VALID_ADDRESS[16];
+extern const ImmediateMap VALID_IMMEDIATE[16];
 
 // Verify if the code is correct. In another case, returns -1 (INVALID_REGISTER)
 int getRegByLabel(char label[3]); // Search if label's statement is correct, returns the index of VALID_REGISTERS; send -1 to an error.
@@ -143,5 +215,10 @@ int getInstructionByCode(char code[4]);
 // This make the same, but return structs. Can be useful in some cases.
 InstructionMap getInstructionStructData(char *instruction_treated); // Returns the struct, returns parsed.
 RegMap getRegStructData(char *reg_treated);                         // Get register, returns parsed;
+AddressMap getAddressStructData(const char *address);
 
+void printInstruction_typej(InstructToken_TypeJ instr);
+void printInstruction_typeb(InstructToken_TypeB instr);
+void printInstruction_typei(InstructToken_TypeI instr);
+void printInstruction_typer(InstructToken_TypeR instr);
 #endif

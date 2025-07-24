@@ -23,4 +23,15 @@ typedef struct
     InstructionTypes type;
 } InstructionMap;
 
+typedef struct
+{
+    char *address;
+    char *code;
+} AddressMap;
+
+typedef struct
+{
+    char *value;
+    char *code;
+} ImmediateMap;
 #endif

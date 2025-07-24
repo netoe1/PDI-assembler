@@ -5,7 +5,7 @@
 #include <memory.h>
 #include <string.h>
 
-static void convertIntegerToBin16(int integer, char res[], int n) // Convert a integer number to a binary string 16 bits
+static void convertIntegerToBin(int integer, char res[], int n)
 {
     // Inicializa o array de resultado com zeros
     for (int i = 0; i < n; i++)
@@ -59,33 +59,35 @@ static void convertIntegerToBin16(int integer, char res[], int n) // Convert a i
     }
 }
 
-InstructToken_TypeJ parseToCoder_typej(const char *instr_treated, const char *imed_treated)
+void codeinstruction_typeJ(const char *instruction_treated, const char *address_treated, char output[MAX_BITS_INSTRUCTION + 1])
 {
-    InstructToken_TypeJ send = {instr_treated, imed_treated};
-    return send;
-}
-InstructToken_TypeI parseToCoder_typei(const char *instr_treated, const char *rd_treated, const char *imed_treated)
-{
-    InstructToken_TypeI typei = {instr_treated, rd_treated, imed_treated};
-    return typei;
-}
-InstructToken_TypeB parseToCoder_typeb(const char *instr_treated, const char *r1_treated, const char *r2_treated, const char *address_treated)
-{
-    InstructToken_TypeB typeb = {instr_treated, r1_treated, r2_treated, address_treated};
-    return typeb;
-}
-InstructToken_TypeR parseToDCoder_typer(const char *instr_treated, const char *rd_treated, const char *rf1_treated, const char *rf2_treated)
-{
-    InstructToken_TypeR typer = {instr_treated, rd_treated, rf1_treated, rf2_treated};
-    return typer;
+    memset(output, '0', MAX_BITS_INSTRUCTION);
+    output[MAX_BITS_INSTRUCTION] = '\0';
+
+    output[0] = '1';
+    output[1] = '0';
+    output[2] = '0';
+
+    AddressMap address = getAddressStructData(address_treated);
+
+    memcpy(&output[3], address.code, 4);
 }
 
-BitStruct_J coderToBit_typej(InstructToken_TypeJ instruction_struct);
-BitStruct_I coderToBit_typei(InstructToken_TypeI instruction_struct);
-BitStruct_B coderToBit_typeb(InstructToken_TypeB instruction_struct);
-BitStruct_R coderToBit_typer(InstructToken_TypeR instruction_struct);
+void codeinstruction_typeI(const char *instruction_treated, const char *rd_treated, const char *imed_treated, char output[MAX_BITS_INSTRUCTION + 1])
+{
+    memset(output, '0', MAX_BITS_INSTRUCTION);
 
-void bitTostr_typej(BitStruct_J bit_struct, char instruction[MAX_BITS_INSTRUCTION + 1]);
-void bitToStr_typei(BitStruct_I bit_struct, char instruction[MAX_BITS_INSTRUCTION + 1]);
-void bitToStr_typeb(BitStruct_B bit_struct, char instruction[MAX_BITS_INSTRUCTION + 1]);
-void bitToStr_typer(BitStruct_R bit_struct, char instruction[MAX_BITS_INSTRUCTION + 1]);
+    RegMap rd_struct = getRegStructData(rd_treated);
+
+    output[MAX_BITS_INSTRUCTION] = '\0';
+}
+void codeinstruction_typeB(const char *instruction_treated, const char *r1, const char *r2, const char *address, char output[MAX_BITS_INSTRUCTION + 1])
+{
+    memset(output, '0', MAX_BITS_INSTRUCTION);
+    output[MAX_BITS_INSTRUCTION] = '\0';
+}
+void codeinstruction_typeR(const char *instruction_treated, const char *rd, const char *rf1, const char *rf2, char output[MAX_BITS_INSTRUCTION + 1])
+{
+    memset(output, '0', MAX_BITS_INSTRUCTION);
+    output[MAX_BITS_INSTRUCTION] = '\0';
+}
