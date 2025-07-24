@@ -58,7 +58,28 @@ void convertIntegerToBin16(int integer, char res[], int n)
     }
 }
 
-InstructToken_TypeJ parseToCoder_typej(const char *instr_treated, const char *imed_treated);
+InstructToken_TypeJ parseToCoder_typej(const char *instr_treated, const char *imed_treated)
+{
+    int instr_len = strlen(instr_treated);
+    char *endptr = NULL;
+    int num = 0;
+
+    num = strtol(imed_treated, &endptr, 10);
+
+    if (endptr == imed_treated)
+    {
+        printf("coder.c: parseToCoder_typej():Nenhum número foi encontrado na string.\n");
+        exit(-1);
+    }
+    if (*endptr != '\0')
+    {
+        puts("coder.c: parseToCoder_typej(): A string não foi feita totalmente.\n");
+    }
+
+    InstructToken_TypeJ send = {instr_treated, imed_treated};
+
+    return send;
+}
 InstructToken_TypeI parseToCoder_typei(const char *instr_treated, const char *rd_treated, const char *imed_treated);
 InstructToken_TypeB parseToCoder_typeb(const char *instr_treated, const char *r1_treated, const char *r2_treated, const char *address_treated);
 InstructToken_TypeR parseToDCoder_typer(const char *instr_treated, const char *rd_treated, const char *rf1_treated, const char *rf2_treated);

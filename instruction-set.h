@@ -65,10 +65,10 @@
 
 typedef struct
 {
-    char op[MAX_INSTRUCTION_LABEL_SIZE];
-    char rd[MAX_REG_LABEL_SIZE];
-    char rf1[MAX_REG_LABEL_SIZE];
-    char rf2[MAX_REG_LABEL_SIZE];
+    char op[MAX_INSTRUCTION_LABEL_SIZE + 1];
+    char rd[MAX_REG_LABEL_SIZE + 1];
+    char rf1[MAX_REG_LABEL_SIZE + 1];
+    char rf2[MAX_REG_LABEL_SIZE + 1];
 
 } InstructToken_TypeR;
 
@@ -76,57 +76,57 @@ typedef struct
 
 typedef struct
 {
-    char op[MAX_INSTRUCTION_LABEL_SIZE];
-    char rd[MAX_REG_CODE_SIZE];
+    char op[MAX_INSTRUCTION_LABEL_SIZE + 1];
+    char rd[MAX_REG_CODE_SIZE + 1];
     int imed;
 } InstructToken_TypeI;
 
 // Instruct-Set-TypeJ => TOKEN_PARSE
 typedef struct
 {
-    char op[MAX_INSTRUCTION_LABEL_SIZE];
+    char op[MAX_INSTRUCTION_LABEL_SIZE + 1];
     int end;
 } InstructToken_TypeJ;
 
 // Instruct-Set-TypeJ => TOKEN_PARSE
 typedef struct
 {
-    char op[MAX_INSTRUCTION_LABEL_SIZE];
-    char reg1[MAX_INSTRUCTION_LABEL_SIZE];
-    char reg2[MAX_INSTRUCTION_LABEL_SIZE];
+    char op[MAX_INSTRUCTION_LABEL_SIZE + 1];
+    char reg1[MAX_INSTRUCTION_LABEL_SIZE + 1];
+    char reg2[MAX_INSTRUCTION_LABEL_SIZE + 1];
 } InstructToken_TypeB;
 
 typedef struct
 {
-    Bit opcode[4];  // 000      [3] bits
-    Bit rd[4];      // 000      [3] bits
-    Bit rf1[4];     // 000      [3] bits
-    Bit rf2[4];     // 000      [3] bits
-    Bit imed[5];    // 0000     [4] bits
+    Bit opcode[4]; // 000      [3] bits
+    Bit rd[4];     // 000      [3] bits
+    Bit rf1[4];    // 000      [3] bits
+    Bit rf2[4];    // 000      [3] bits
+    Bit imed[5];   // 0000     [4] bits
 } BitStruct_R;
 
 typedef struct
 {
-    Bit opcode[4];  // 000      [3] bits
-    Bit rd[4];      // 000      [3] bits
-    Bit imed[5];    // 0000     [4] bits
-    Bit empty[7];   // 000000   [6] bits
+    Bit opcode[4]; // 000      [3] bits
+    Bit rd[4];     // 000      [3] bits
+    Bit imed[5];   // 0000     [4] bits
+    Bit empty[7];  // 000000   [6] bits
 } BitStruct_I;
 
 typedef struct
 {
-    Bit opcode[4];  // 000      [3] bits
-    Bit rd[4];      // 000      [3] bits
-    Bit imed[5];    // 0000     [4] bits
-    Bit empty[7];   // 000000   [6] bits
+    Bit opcode[4]; // 000      [3] bits
+    Bit rd[4];     // 000      [3] bits
+    Bit imed[5];   // 0000     [4] bits
+    Bit empty[7];  // 000000   [6] bits
 } BitStruct_J;
 
 typedef struct
 {
-    Bit opcode[4];  // 000      [3] bits
-    Bit reg1[4];    // 000      [3] bits
-    Bit reg2[4];    // 000      [3] bits
-    Bit empty[8];   // 00000000 [4] bits 
+    Bit opcode[4]; // 000      [3] bits
+    Bit reg1[4];   // 000      [3] bits
+    Bit reg2[4];   // 000      [3] bits
+    Bit empty[8];  // 00000000 [4] bits
 } BitStruct_B;
 
 extern const InstructionMap VALID_INSTRUCTIONS[8];
