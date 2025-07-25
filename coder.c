@@ -69,17 +69,14 @@ void codeinstruction_typeJ(const char *instruction_treated, const char *address_
     output[2] = '0';
 
     AddressMap address = getAddressStructData(address_treated);
-
     memcpy(&output[3], address.code, 4);
 }
 
 void codeinstruction_typeI(const char *instruction_treated, const char *rd_treated, const char *imed_treated, char output[MAX_BITS_INSTRUCTION + 1])
 {
     memset(output, '0', MAX_BITS_INSTRUCTION);
-
-    RegMap rd_struct = getRegStructData(rd_treated);
-
     output[MAX_BITS_INSTRUCTION] = '\0';
+    RegMap rd_struct = getRegStructData(rd_treated);
 }
 void codeinstruction_typeB(const char *instruction_treated, const char *r1, const char *r2, const char *address, char output[MAX_BITS_INSTRUCTION + 1])
 {
