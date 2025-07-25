@@ -1,5 +1,6 @@
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 #include "instruction-set.h"
 #include "debug-modules.h"
 #include "utils.h"
@@ -25,7 +26,7 @@ const RegMap VALID_REGISTERS[] = {
     {R7_LABEL, R7_CODE},  // R7
 };
 
-extern const AddressMap VALID_ADDRESS[] = {
+const AddressMap VALID_ADDRESS[] = {
     {MEM_ADDRESS_0_DECIMAL, MEM_ADDRESS_0_BIN},
     {MEM_ADDRESS_1_DECIMAL, MEM_ADDRESS_1_BIN},
     {MEM_ADDRESS_2_DECIMAL, MEM_ADDRESS_2_BIN},
@@ -44,6 +45,25 @@ extern const AddressMap VALID_ADDRESS[] = {
     {MEM_ADDRESS_15_DECIMAL, MEM_ADDRESS_15_BIN},
 };
 
+const ImmediateMap VALID_IMMEDIATE[] = {
+    {IMMEDIATE_0_DECIMAL, IMMEDIATE_0_BIN},
+    {IMMEDIATE_1_DECIMAL, IMMEDIATE_1_BIN},
+    {IMMEDIATE_2_DECIMAL, IMMEDIATE_2_BIN},
+    {IMMEDIATE_3_DECIMAL, IMMEDIATE_3_BIN},
+    {IMMEDIATE_4_DECIMAL, IMMEDIATE_4_BIN},
+    {IMMEDIATE_5_DECIMAL, IMMEDIATE_5_BIN},
+    {IMMEDIATE_6_DECIMAL, IMMEDIATE_6_BIN},
+    {IMMEDIATE_7_DECIMAL, IMMEDIATE_7_BIN},
+    {IMMEDIATE_8_DECIMAL, IMMEDIATE_8_BIN},
+    {IMMEDIATE_9_DECIMAL, IMMEDIATE_9_BIN},
+    {IMMEDIATE_10_DECIMAL, IMMEDIATE_10_BIN},
+    {IMMEDIATE_11_DECIMAL, IMMEDIATE_11_BIN},
+    {IMMEDIATE_12_DECIMAL, IMMEDIATE_12_BIN},
+    {IMMEDIATE_13_DECIMAL, IMMEDIATE_13_BIN},
+    {IMMEDIATE_14_DECIMAL, IMMEDIATE_14_BIN},
+    {IMMEDIATE_15_DECIMAL, IMMEDIATE_15_BIN},
+};
+
 int getRegByLabel(char label[3])
 {
     to_lower(label);
@@ -59,7 +79,6 @@ int getRegByLabel(char label[3])
 // get if label's statement is correct.
 int getRegByCode(char code[4])
 {
-
     to_lower(code);
 
     for (int i = 0; i < 8; i++)
@@ -107,19 +126,19 @@ static InstructionMap invalidInstruction()
 
 static RegMap invalidRegister()
 {
-    RegMap invalid = {"null", "null"};
+    RegMap invalid = {"-1", "-1"};
     return invalid;
 }
 
 static AddressMap invalidAddress()
 {
-    AddressMap invalid = {"-1", "0000"};
+    AddressMap invalid = {"-1", "-1"};
     return invalid;
 }
 
 static ImmediateMap invalidImmediate()
 {
-    ImmediateMap invalid = {"-1", "0000"};
+    ImmediateMap invalid = {"-1", "-1"};
     return invalid;
 }
 
@@ -198,3 +217,39 @@ ImmediateMap getImmediateStructData(const char *immediate)
     }
     return invalidImmediate();
 }
+
+#pragma region PRINT
+
+void printInstr_typej(InstructToken_TypeJ instr)
+{
+    printdiv("=", 16, "Instruction TYPE-J");
+    printf("Opcode:%s\n", instr.op);
+    printf("Endereço:%d\n", instr.end);
+    printf("\n");
+}
+void printInstr_typeb(InstructToken_TypeB instr)
+{
+    printdiv("=", 16, "Instruction TYPE-B");
+    printf("Opcode:%s\n", instr.op);
+    printf("Reg1:%s\n", instr.reg1);
+    printf("Reg2:%s\n", instr.reg2);
+    printf("\n");
+}
+void printInstr_typei(InstructToken_TypeI instr)
+{
+    printdiv("=", 16, "Instruction TYPE-I");
+    printf("Opcode:%s\n", instr.op);
+    printf("Reg1:%s\n", instr.rd);
+    printf("Imediato:%d\n", instr.imed);
+    printf("\n");
+}
+void printInstr_typer(InstructToken_TypeR instr)
+{
+    printdiv("=", 16, "Instruction TYPE-R");
+    printf("Opcode:%s\n", instr.op);
+    printf("Reg Destino:%s\n", instr.rd);
+    printf("Reg Fonte 1:%s\n", instr.rf1);
+    printf("Reg Fonte 2:%s\n", instr.rf2);
+    printf("\n");
+}
+#pragma endregion PRINT

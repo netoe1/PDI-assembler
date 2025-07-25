@@ -1,6 +1,5 @@
 #ifndef INSTRUCTION_SET_H
 #define INSTRUCTION_SET_H
-#include "bit-impl.h"
 #include "map.h"
 
 // Defining label for use in table
@@ -168,38 +167,6 @@ typedef struct
     char reg2[MAX_INSTRUCTION_LABEL_SIZE + 1];
 } InstructToken_TypeB;
 
-typedef struct
-{
-    Bit opcode[4]; // 000      [3] bits
-    Bit rd[4];     // 000      [3] bits
-    Bit rf1[4];    // 000      [3] bits
-    Bit rf2[4];    // 000      [3] bits
-    Bit imed[5];   // 0000     [4] bits
-} BitStruct_R;
-
-typedef struct
-{
-    Bit opcode[3]; // 000      [3] bits
-    Bit rd[3];     // 000      [3] bits
-    Bit imed[4];   // 0000     [4] bits
-    Bit empty[6];  // 000000   [6] bits
-} BitStruct_I;
-
-typedef struct
-{
-    Bit opcode[3]; // 000      [3] bits
-    Bit imed[3];   // 0000     [3] bits
-    Bit empty[10]; // 000000   [10] bits
-} BitStruct_J;
-
-typedef struct
-{
-    Bit opcode[3]; // 000      [3] bits
-    Bit reg1[3];   // 000      [3] bits
-    Bit reg2[3];   // 000      [3] bits
-    Bit empty[7];  // 00000000 [4] bits
-} BitStruct_B;
-
 extern const InstructionMap VALID_INSTRUCTIONS[8];
 extern const RegMap VALID_REGISTERS[8];
 extern const InstructionMap TYPE_R_INSTR[8];
@@ -217,8 +184,8 @@ InstructionMap getInstructionStructData(char *instruction_treated); // Returns t
 RegMap getRegStructData(char *reg_treated);                         // Get register, returns parsed;
 AddressMap getAddressStructData(const char *address);
 
-void printInstruction_typej(InstructToken_TypeJ instr);
-void printInstruction_typeb(InstructToken_TypeB instr);
-void printInstruction_typei(InstructToken_TypeI instr);
-void printInstruction_typer(InstructToken_TypeR instr);
+void printInstr_typej(InstructToken_TypeJ instr);
+void printInstr_typeb(InstructToken_TypeB instr);
+void printInstr_typei(InstructToken_TypeI instr);
+void printInstr_typer(InstructToken_TypeR instr);
 #endif
