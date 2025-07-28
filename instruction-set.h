@@ -184,9 +184,10 @@ int getInstructionByLabel(char label[4]); // Search if label's statement is corr
 int getInstructionByCode(char code[4]);
 
 // This make the same, but return structs. Can be useful in some cases.
-InstructionMap getInstructionStructData(char *instruction_treated); // Returns the struct, returns parsed.
-RegMap getRegStructData(char *reg_treated);                         // Get register, returns parsed;
+InstructionMap getInstructionStructData(const char *instruction_treated); // Returns the struct, returns parsed.
+RegMap getRegStructData(const char *reg_treated);                         // Get register, returns parsed;
 AddressMap getAddressStructData(const char *address);
+ImmediateMap getImmediateStructData(const char *immediate);
 
 void printInstr_typej(InstructToken_TypeJ instr);
 void printInstr_typeb(InstructToken_TypeB instr);

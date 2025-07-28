@@ -19,8 +19,9 @@ int main(void)
     // testCoderTypeJ("jmp", "10", output);
 
     char *instr = "sta";
-    char *rd = "r0";
+    char *rd = "r2";
     char *imed = "10";
     codeinstruction_typeI(instr, rd, imed, output);
+    puts(output);
     return 0;
 }

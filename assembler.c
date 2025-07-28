@@ -48,7 +48,6 @@ void parseFile(FILE *openedFile)
             continue;
         }
         sanitize_buffer(instruction);
-        to_lower(instruction);
         InstructionMap instructionParsed = getInstructionStructData(instruction);
 
         if (strcmp(instructionParsed.code, "-1") == FAILURE_OPERATION)
@@ -126,10 +125,6 @@ void parseFile(FILE *openedFile)
             sanitize_buffer(rd);
             sanitize_buffer(rf1);
             sanitize_buffer(rf2);
-            to_lower(rd);
-            to_lower(rf1);
-            to_lower(rf2);
-
             print_debug_typeR(instruction, lineRead, rd, rf1, rf2);
 
             if (getRegByLabel(rf1) == -1 || getRegByLabel(rf2) == -1)
@@ -187,8 +182,6 @@ void parseFile(FILE *openedFile)
             sanitize_buffer(r1);
             sanitize_buffer(r2);
             sanitize_buffer(memAddress);
-            to_lower(r1);
-            to_lower(r2);
 
             if (!is_number(memAddress))
             {

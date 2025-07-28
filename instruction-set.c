@@ -72,7 +72,6 @@ const int MAX_VALID_REGISTER = sizeof(VALID_REGISTERS) / sizeof(VALID_REGISTERS[
 
 int getRegByLabel(char label[3])
 {
-    to_lower(label);
     for (int i = 0; i < MAX_VALID_REGISTER; i++)
     {
         if (strcmp(label, VALID_REGISTERS[i].label) == 0)
@@ -85,8 +84,6 @@ int getRegByLabel(char label[3])
 // get if label's statement is correct.
 int getRegByCode(char code[4])
 {
-    to_lower(code);
-
     for (int i = 0; i < MAX_VALID_REGISTER; i++)
     {
         if (strcmp(code, VALID_REGISTERS[i].code) == 0)
@@ -99,8 +96,6 @@ int getRegByCode(char code[4])
 
 int getInstructionByLabel(char label[4])
 {
-    to_lower(label);
-
     for (int i = 0; i < MAX_VALID_INSTRUCTIONS; i++)
     {
         if (strcmp(label, VALID_INSTRUCTIONS[i].label) == 0)
@@ -112,7 +107,6 @@ int getInstructionByLabel(char label[4])
 }
 int getInstructionByCode(char code[4])
 {
-    to_lower(code);
 
     for (int i = 0; i < MAX_VALID_INSTRUCTIONS; i++)
     {
@@ -126,7 +120,7 @@ int getInstructionByCode(char code[4])
 
 static InstructionMap invalidInstruction()
 {
-    InstructionMap invalid = {"null", "-1", -1};
+    InstructionMap invalid = {"-1", "-1", -1};
     return invalid;
 }
 
@@ -148,16 +142,14 @@ static ImmediateMap invalidImmediate()
     return invalid;
 }
 
-InstructionMap getInstructionStructData(char *instruction_treated)
+InstructionMap getInstructionStructData(const char *instruction_treated)
 {
 
-    puts("ENTROU");
     if (!instruction_treated)
     {
         puts("instruction-set.c:getInstructionStructData(): Invalid pointer == NULL");
         exit(-1);
     }
-    to_lower(instruction_treated);
 
     for (int i = 0; i < MAX_VALID_INSTRUCTIONS; i++)
     {
@@ -169,15 +161,13 @@ InstructionMap getInstructionStructData(char *instruction_treated)
     return invalidInstruction();
 }
 
-RegMap getRegStructData(char *reg_treated)
+RegMap getRegStructData(const char *reg_treated)
 {
     if (!reg_treated)
     {
         puts("instruction-set.c:getRegStructData(): Invalid pointer == NULL");
         exit(-1);
     }
-
-    to_lower(reg_treated);
 
     for (int i = 0; i < MAX_VALID_REGISTER; i++)
     {
