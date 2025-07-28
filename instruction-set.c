@@ -216,38 +216,6 @@ ImmediateMap getImmediateStructData(const char *immediate)
     return invalidImmediate();
 }
 
-#pragma region PRINT
 
-void printInstr_typej(InstructToken_TypeJ instr)
-{
-    printdiv("=", 16, "Instruction TYPE-J");
-    printf("Opcode:%s\n", instr.op);
-    printf("Endereço:%d\n", instr.end);
-    printf("\n");
-}
-void printInstr_typeb(InstructToken_TypeB instr)
-{
-    printdiv("=", 16, "Instruction TYPE-B");
-    printf("Opcode:%s\n", instr.op);
-    printf("Reg1:%s\n", instr.reg1);
-    printf("Reg2:%s\n", instr.reg2);
-    printf("\n");
-}
-void printInstr_typei(InstructToken_TypeI instr)
-{
-    printdiv("=", 16, "Instruction TYPE-I");
-    printf("Opcode:%s\n", instr.op);
-    printf("Reg1:%s\n", instr.rd);
-    printf("Imediato:%d\n", instr.imed);
-    printf("\n");
-}
-void printInstr_typer(InstructToken_TypeR instr)
-{
-    printdiv("=", 16, "Instruction TYPE-R");
-    printf("Opcode:%s\n", instr.op);
-    printf("Reg Destino:%s\n", instr.rd);
-    printf("Reg Fonte 1:%s\n", instr.rf1);
-    printf("Reg Fonte 2:%s\n", instr.rf2);
-    printf("\n");
-}
-#pragma endregion PRINT
+
+

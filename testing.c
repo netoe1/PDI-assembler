@@ -22,9 +22,11 @@ void testCoderTypeB(char *instr, char *r1, char *r2, char *address, char output[
 int main(void)
 {
     char output[17];
-    //testCoderTypeJ("jmp", "10", output);
-    //testCoderTypeI("lda", "r0", "10", output);
+    // testCoderTypeJ("jmp", "10", output);
+    // testCoderTypeI("lda", "r0", "10", output);
     testCoderTypeB("beq", "r0", "r1", "10", output);
+
+    // 110000001101000
 
     return 0;
 }

@@ -4,9 +4,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-bool is_number(const char *str);      // Function to verify if is a number.
-void to_lower(char *str);             // To lower for strings (ANSI_C)
-void sanitize_buffer(char *buffer);   // Sanitize strings.
-bool is_line_empty(const char *line); // Verifica linhas vazias
+bool is_number(const char *str);                             // Function to verify if is a number.
+void sanitize_buffer(char *buffer);                          // Sanitize strings.
+bool is_line_empty(const char *line);                        // Verifica linhas vazias
+void lower_str(char *dst, const char *src, size_t dst_size); // Converte uma string para minúsculas, de forma segura
+                                                             // dst deve ter tamanho suficiente (igual ou maior que len(src) + 1)
 char *trim(char *str);
 #endif

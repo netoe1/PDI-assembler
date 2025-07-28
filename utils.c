@@ -1,6 +1,27 @@
 #include "utils.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <stddef.h>
+
+void lower_str(char *dst, const char *src, size_t dst_size) 
+{
+    if (!src || !dst || dst_size == 0)
+    {
+        return; // proteção contra ponteiros nulos e tamanho inválido
+    }
+
+    size_t i = 0;
+    while (src[i] != '\0' && i < dst_size - 1)
+    {
+        dst[i] = (char)tolower((unsigned char)src[i]);
+        i++;
+    }
+
+    dst[i] = '\0'; // garante terminação nula
+}
+
 bool is_number(const char *str)
 {
     if (*str == '-' || *str == '+')
@@ -16,15 +37,6 @@ bool is_number(const char *str)
         str++;
     }
     return true;
-}
-
-void to_lower(char *str)
-{
-    while (*str)
-    {
-        *str = tolower((unsigned char)*str);
-        str++;
-    }
 }
 
 char *trim(char *str)
@@ -105,4 +117,3 @@ bool is_line_empty(const char *line)
     }
     return true; // só espaços e/ou fim da string
 }
-
