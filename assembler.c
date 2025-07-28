@@ -22,7 +22,6 @@ FILE *readFile(const char *filename)
     }
     return f;
 }
-
 void parseFile(FILE *openedFile)
 {
     char line[LINE_LIMIT];
