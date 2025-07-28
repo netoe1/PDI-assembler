@@ -27,9 +27,46 @@ void to_lower(char *str)
     }
 }
 
-void sanitize_buffer(char *line)
+char *trim(char *str)
 {
-    char *src = line, *dst = line;
+    if (str == NULL)
+        return NULL;
+
+    // Ponteiro para o início
+    char *start = str;
+    while (isspace((unsigned char)*start))
+    {
+        start++;
+    }
+
+    // Ponteiro para o fim
+    char *end = str + strlen(str) - 1;
+    while (end > start && isspace((unsigned char)*end))
+    {
+        end--;
+    }
+
+    // Novo fim da string
+    *(end + 1) = '\0';
+
+    // Se precisar mover a string para o início do buffer:
+    if (start != str)
+    {
+        memmove(str, start, end - start + 2); // +1 para o caractere final, +1 porque end é inclusivo
+    }
+
+    return str;
+}
+
+void sanitize_buffer(char *str) // Trim e sanitiza.
+{
+    if (str == NULL)
+        return;
+
+    // Etapa 1: Remover '\n' e '\r'
+    char *src = str;
+    char *dst = str;
+
     while (*src)
     {
         if (*src != '\n' && *src != '\r')
@@ -39,6 +76,22 @@ void sanitize_buffer(char *line)
         src++;
     }
     *dst = '\0';
+
+    // Etapa 2: Trim (remover espaços do início e do fim)
+    // Ponteiros para o início e fim da string útil
+    char *start = str;
+    while (isspace((unsigned char)*start))
+        start++;
+
+    char *end = str + strlen(str) - 1;
+    while (end >= start && isspace((unsigned char)*end))
+        end--;
+
+    *(end + 1) = '\0'; // Finalizar a string
+
+    // Se o início mudou, move o conteúdo para o início do buffer
+    if (start != str)
+        memmove(str, start, end - start + 2); // +1 para incluir o último caractere, +1 para '\0'
 }
 
 bool is_line_empty(const char *line)
@@ -53,29 +106,3 @@ bool is_line_empty(const char *line)
     return true; // só espaços e/ou fim da string
 }
 
-void trim(char *str)
-{
-    int start = 0;
-    int end = strlen(str) - 1;
-    while (isspace(str[start]))
-    {
-        start++;
-    }
-
-    while (end >= start && isspace(str[end]))
-    {
-        end--;
-    }
-    if (start > end)
-    {
-        str[0] = '\0';
-        return;
-    }
-
-    int i, j;
-    for (i = start, j = 0; i <= end; i++, j++)
-    {
-        str[j] = str[i];
-    }
-    str[j] = '\0';
-}

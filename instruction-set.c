@@ -13,7 +13,8 @@ const InstructionMap VALID_INSTRUCTIONS[] = {
     {J_JMP_LABEL, OP_JMP_CODE, TYPE_J}, // JMP
     {B_BNE_LABEL, OP_BNE_CODE, TYPE_B}, // BNE
     {B_BEQ_LABEL, OP_BEQ_CODE, TYPE_B}, // BEQ
-    {I_STA_LABEL, OP_STA_CODE, TYPE_I}};
+    {I_STA_LABEL, OP_STA_CODE, TYPE_I},
+};
 
 const RegMap VALID_REGISTERS[] = {
     {R0_LABEL, R0_CODE},  // R0
@@ -64,12 +65,17 @@ const ImmediateMap VALID_IMMEDIATE[] = {
     {IMMEDIATE_15_DECIMAL, IMMEDIATE_15_BIN},
 };
 
+const int MAX_VALID_INSTRUCTIONS = sizeof(VALID_INSTRUCTIONS) / sizeof(VALID_INSTRUCTIONS[0]);
+const int MAX_VALID_IMMEDIATE = sizeof(VALID_IMMEDIATE) / sizeof(VALID_IMMEDIATE[0]);
+const int MAX_VALID_ADDRESS = sizeof(VALID_ADDRESS) / sizeof(VALID_ADDRESS[0]);
+const int MAX_VALID_REGISTER = sizeof(VALID_REGISTERS) / sizeof(VALID_REGISTERS[0]);
+
 int getRegByLabel(char label[3])
 {
     to_lower(label);
-    for (int i = 0; i < MAX_REG; i++)
+    for (int i = 0; i < MAX_VALID_REGISTER; i++)
     {
-        if (strcmp(label, VALID_REGISTERS[i].label) == SUCCESSFUL_OPERATION)
+        if (strcmp(label, VALID_REGISTERS[i].label) == 0)
         {
             return i;
         }
@@ -81,9 +87,9 @@ int getRegByCode(char code[4])
 {
     to_lower(code);
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < MAX_VALID_REGISTER; i++)
     {
-        if (strcmp(code, VALID_REGISTERS[i].code) == SUCCESSFUL_OPERATION)
+        if (strcmp(code, VALID_REGISTERS[i].code) == 0)
         {
             return i;
         }
@@ -95,9 +101,9 @@ int getInstructionByLabel(char label[4])
 {
     to_lower(label);
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < MAX_VALID_INSTRUCTIONS; i++)
     {
-        if (strcmp(label, VALID_INSTRUCTIONS[i].label) == SUCCESSFUL_OPERATION)
+        if (strcmp(label, VALID_INSTRUCTIONS[i].label) == 0)
         {
             return i;
         }
@@ -108,9 +114,9 @@ int getInstructionByCode(char code[4])
 {
     to_lower(code);
 
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < MAX_VALID_INSTRUCTIONS; i++)
     {
-        if (strcmp(code, VALID_INSTRUCTIONS[i].code) == SUCCESSFUL_OPERATION)
+        if (strcmp(code, VALID_INSTRUCTIONS[i].code) == 0)
         {
             return i;
         }
@@ -144,6 +150,8 @@ static ImmediateMap invalidImmediate()
 
 InstructionMap getInstructionStructData(char *instruction_treated)
 {
+
+    puts("ENTROU");
     if (!instruction_treated)
     {
         puts("instruction-set.c:getInstructionStructData(): Invalid pointer == NULL");
@@ -151,9 +159,9 @@ InstructionMap getInstructionStructData(char *instruction_treated)
     }
     to_lower(instruction_treated);
 
-    for (int i = 0; i < sizeof(VALID_INSTRUCTIONS) / sizeof(InstructionMap); i++)
+    for (int i = 0; i < MAX_VALID_INSTRUCTIONS; i++)
     {
-        if (strcmp(instruction_treated, VALID_INSTRUCTIONS[i].label) == SUCCESSFUL_OPERATION)
+        if (strcmp(instruction_treated, VALID_INSTRUCTIONS[i].label) == 0)
         {
             return VALID_INSTRUCTIONS[i];
         }
@@ -171,9 +179,9 @@ RegMap getRegStructData(char *reg_treated)
 
     to_lower(reg_treated);
 
-    for (int i = 0; i < sizeof(VALID_REGISTERS) / sizeof(RegMap); i++)
+    for (int i = 0; i < MAX_VALID_REGISTER; i++)
     {
-        if (strcmp(reg_treated, VALID_REGISTERS[i].label) == SUCCESSFUL_OPERATION)
+        if (strcmp(reg_treated, VALID_REGISTERS[i].label) == 0)
         {
             return VALID_REGISTERS[i];
         }
@@ -189,7 +197,7 @@ AddressMap getAddressStructData(const char *address)
         exit(-1);
     }
 
-    for (int i = 0; i < MAX_ADDRESS_SIZE; i++)
+    for (int i = 0; i < MAX_VALID_ADDRESS; i++)
     {
         if (strcmp(address, VALID_ADDRESS[i].address) == 0)
         {
@@ -208,7 +216,7 @@ ImmediateMap getImmediateStructData(const char *immediate)
         exit(-1);
     }
 
-    for (int i = 0; i < MAX_ADDRESS_SIZE; i++)
+    for (int i = 0; i < MAX_VALID_IMMEDIATE; i++)
     {
         if (strcmp(immediate, VALID_IMMEDIATE[i].value) == 0)
         {

@@ -172,6 +172,10 @@ extern const RegMap VALID_REGISTERS[8];
 extern const InstructionMap TYPE_R_INSTR[8];
 extern const AddressMap VALID_ADDRESS[16];
 extern const ImmediateMap VALID_IMMEDIATE[16];
+extern const int MAX_VALID_INSTRUCTIONS;
+extern const int MAX_VALID_IMMEDIATE;
+extern const int MAX_VALID_ADDRESS;
+extern const int MAX_VALID_REGISTER;
 
 // Verify if the code is correct. In another case, returns -1 (INVALID_REGISTER)
 int getRegByLabel(char label[3]); // Search if label's statement is correct, returns the index of VALID_REGISTERS; send -1 to an error.

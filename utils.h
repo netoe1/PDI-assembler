@@ -8,5 +8,5 @@ bool is_number(const char *str);      // Function to verify if is a number.
 void to_lower(char *str);             // To lower for strings (ANSI_C)
 void sanitize_buffer(char *buffer);   // Sanitize strings.
 bool is_line_empty(const char *line); // Verifica linhas vazias
-void trim(char *str);
+char *trim(char *str);
 #endif
