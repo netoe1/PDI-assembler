@@ -6,45 +6,6 @@
 #include <stdio.h>
 #include <ctype.h>
 
-// static void convertIntegerToBin(int integer, char res[], int n)
-// {
-//     for (int i = 0; i < n; i++)
-//         res[i] = '0';
-//     res[n] = '\0';
-
-//     if (integer < 0)
-//     {
-//         integer = -integer;
-//         for (int i = n - 1; i >= 0 && integer > 0; i--)
-//         {
-//             res[i] = (integer % 2) + '0';
-//             integer /= 2;
-//         }
-//         for (int i = 0; i < n; i++)
-//             res[i] = (res[i] == '0') ? '1' : '0';
-
-//         int carry = 1;
-//         for (int i = n - 1; i >= 0 && carry; i--)
-//         {
-//             if (res[i] == '0')
-//             {
-//                 res[i] = '1';
-//                 carry = 0;
-//             }
-//             else
-//                 res[i] = '0';
-//         }
-//     }
-//     else
-//     {
-//         for (int i = n - 1; i >= 0 && integer > 0; i--)
-//         {
-//             res[i] = (integer % 2) + '0';
-//             integer /= 2;
-//         }
-//     }
-// }
-
 static void settingOpcode(const char opcode[4], char output[17])
 {
     memcpy(output, opcode, 3);

@@ -1,6 +1,6 @@
 all:
-	gcc -o main main.c instruction-set.c debug-modules.c utils.c
-test:
+	gcc -o assembler assembler.c instruction-set.c debug-modules.c utils.c
+dev:
 
 	gcc -o testing testing.c instruction-set.c utils.c debug-modules.c
 crun:
@@ -10,4 +10,4 @@ run:
 	./main
 
 clean:
-	rm -rf main testing *.obj *.bin
+	rm -rf main testing assembler *.obj *.bin

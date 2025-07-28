@@ -10,4 +10,5 @@ bool is_line_empty(const char *line);                        // Verifica linhas 
 void lower_str(char *dst, const char *src, size_t dst_size); // Converte uma string para minúsculas, de forma segura
                                                              // dst deve ter tamanho suficiente (igual ou maior que len(src) + 1)
 char *trim(char *str);
+void remove_white_space(char *buffer);
 #endif

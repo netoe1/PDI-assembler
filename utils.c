@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include <stddef.h>
 
-void lower_str(char *dst, const char *src, size_t dst_size) 
+void lower_str(char *dst, const char *src, size_t dst_size)
 {
     if (!src || !dst || dst_size == 0)
     {
@@ -21,24 +21,29 @@ void lower_str(char *dst, const char *src, size_t dst_size)
 
     dst[i] = '\0'; // garante terminação nula
 }
-
 bool is_number(const char *str)
 {
+    if (!str || *str == '\0')
+        return false;
+
+    // Pula o sinal, se existir
     if (*str == '-' || *str == '+')
         str++;
 
+    // Após o sinal, precisa haver ao menos um dígito
     if (*str == '\0')
         return false;
 
+    // Verifica se todos os caracteres restantes são dígitos
     while (*str)
     {
         if (!isdigit((unsigned char)*str))
             return false;
         str++;
     }
+
     return true;
 }
-
 char *trim(char *str)
 {
     if (str == NULL)
@@ -69,7 +74,6 @@ char *trim(char *str)
 
     return str;
 }
-
 void sanitize_buffer(char *str) // Trim e sanitiza.
 {
     if (str == NULL)
@@ -105,7 +109,6 @@ void sanitize_buffer(char *str) // Trim e sanitiza.
     if (start != str)
         memmove(str, start, end - start + 2); // +1 para incluir o último caractere, +1 para '\0'
 }
-
 bool is_line_empty(const char *line)
 {
     for (; *line != '\0'; line++)
@@ -116,4 +119,17 @@ bool is_line_empty(const char *line)
         }
     }
     return true; // só espaços e/ou fim da string
+}
+void remove_white_space(char *buffer)
+{
+    char *aux = buffer;
+    while (*aux != '\0')
+    {
+        if (*aux == '\n')
+        {
+            *aux = ' ';
+        }
+
+        aux++;
+    }
 }

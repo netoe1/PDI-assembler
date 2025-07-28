@@ -1,6 +1,10 @@
 #ifndef DEBUG_MODULES_H
 #define DEBUG_MODULES_H
 #include "instruction-set.h"
+
+#define ERROR_LINE(fmt, ...) \
+    fprintf(stderr, "ERR-%s:l.%d: " fmt "\n", currentFile, lineRead, ##__VA_ARGS__)
+
 void print_debug_typeR(char *inst, int line, char *rd, char *rf1, char *rf2);      // Print formatted a instruction TypeR
 void print_debug_typeJ(char *inst, int line, int mem_address);                     // Print formatted a instruction TypeJ
 void print_debug_typeI(char *inst, int line, char *rd, int imed);                  // Print formatted a instruction Type
