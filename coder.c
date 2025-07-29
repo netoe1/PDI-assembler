@@ -1,6 +1,7 @@
 #include "coder.h"
 #include "instruction-set.h"
 #include "map.h"
+#include "assembler.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
