@@ -27,7 +27,7 @@ void printCodeOnFile(const char *filename, const char *content)
     filename_parsed[30] = '\0';
     strncpy(filename_parsed, filename, 29);
 
-    FILE *fileToPrint = fopen(filename, "w");
+    FILE *fileToPrint = fopen(filename, "a");
 
     if (!fileToPrint)
     {
@@ -53,20 +53,20 @@ readFile(const char *filename)
 
     if (!filename)
     {
-        fprintf(stderr, "assembler.c: readfile(): Ponteiro inválido para ler.");
+        fprintf(stderr, "assembler.c: readfile(): Ponteiro inválido para ler.\n");
         exit(-1);
     }
 
     FILE *f = fopen(filename, "r");
     if (!f)
     {
-        fprintf(stderr, "assembler.c: readfile(): Sem permissão para ler ou o arquivo não existe.");
+        fprintf(stderr, "assembler.c: readfile(): Sem permissão para ler ou o arquivo não existe.\n");
         exit(-1);
     }
     strncpy(input_file, filename, sizeof(input_file) - 1);
     return f;
 }
-void parseFile(FILE *openedFile)
+void assemble(FILE *openedFile)
 {
     char line[LINE_LIMIT];
     char parsedLine[LINE_LIMIT];
@@ -280,10 +280,10 @@ void parseFile(FILE *openedFile)
             err = 1;
             continue;
         }
+        if (!err)
+            printCodeOnFile(output_file, output);
     }
 
-    if (!err)
-        printCodeOnFile(output_file, output);
     puts("assembler-info: ending-parse...");
 }
 void closeFile(FILE *closeFile)
@@ -308,9 +308,23 @@ void show_help(const char *progname)
     printf("  -o <arquivo>    Arquivo de saída\n");
     printf("  --help          Exibe esta mensagem de ajuda\n");
     printf("\nExemplo:\n");
-    printf("  %s -c input.asm -o output.bin\n", progname);
+    printf("  %s -c input.asm -o output.txt\n", progname);
 }
+void clearFile(const char *filename)
+{
+    FILE *f = fopen(filename, "w");
 
+    if (!f)
+    {
+        fprintf(stderr, "Erro ao limpar buffer em clearFile.");
+        exit(-1);
+    }
+    if (fclose(f) == -1)
+    {
+        fprintf(stderr, "Erro ao fechar arquivo em clearFile.");
+        exit(-1);
+    }
+}
 int main(int argc, char *argv[])
 {
     setlocale(LC_ALL, "");
@@ -349,9 +363,9 @@ int main(int argc, char *argv[])
     if (!input_file || !output_file)
     {
         printf("Argumentos incompletos. Use --help para mais informações.\n");
+        exit(EXIT_FAILURE);
     }
-
     FILE *f = readFile(input_file);
-    parseFile(f);
+    assemble(f);
     closeFile(f);
 }

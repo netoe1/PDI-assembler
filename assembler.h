@@ -10,7 +10,8 @@
 
 void printCodeOnFile(const char *filename, const char *content);
 FILE *readFile(const char *filename);
-void parseFile(FILE *openedFile);
+void assemble(FILE *openedFile);
 void closeFile(FILE *closeFile);
 void show_help(const char *progname);
+void clearFile(const char *filename);
 #endif
