@@ -4,6 +4,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#if defined(_WIN32) || defined(_WIN64)
+#define clearTerminal() system("cls")
+#else
+#define clearTerminal() system("clear")
+#endif
+
 bool is_number(const char *str);                             // Function to verify if is a number.
 void sanitize_buffer(char *buffer);                          // Sanitize strings.
 bool is_line_empty(const char *line);                        // Verifica linhas vazias
