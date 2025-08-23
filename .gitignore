@@ -1,5 +1,5 @@
-/*.o
-/*.bin
+*.o
+*.bin
 main
 test
 assembler
