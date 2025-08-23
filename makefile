@@ -1,8 +1,8 @@
 all:
-	gcc -o assembler assembler.c instruction-set.c debug-modules.c utils.c coder.c
+	gcc -o assembler.obj assembler.c instruction-set.c debug-modules.c utils.c coder.c 
 dev:
 
-	gcc -o testing testing.c instruction-set.c utils.c debug-modules.c
+	gcc -o testing.obj testing.c instruction-set.c utils.c debug-modules.c
 crun:
 	make all
 	make run
